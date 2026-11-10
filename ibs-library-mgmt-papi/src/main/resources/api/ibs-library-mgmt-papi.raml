@@ -1,0 +1,63 @@
+#%RAML 1.0
+title: Ibs-Library-Mgmt-Papi
+baseUri: http://Ibs-Library-mgmt-papi-Cloudhub.io
+
+types:
+ getLibraries: !include DataType/getlibrariesdataType.raml
+ createbookreq: !include /DataType/create-book-req-dataType.raml
+ Resdatatype: !include /DataType/get-library-res-dataType.raml
+
+/Libraries:
+  get:
+    description: This is to fetch all library details from db
+    responses:
+      200:
+        body:
+          application/json:
+            type: getLibraries 
+      404:
+        body:
+          application/json:
+            examples:
+              {
+                "errorcode": "400",
+                "Description": "Unauthorized"
+              }  
+  /{LibraryId}:
+    get:
+      description: Fetch Library based on ID
+      responses:
+       200:
+        body:
+          application/json:
+            type: getLibraries 
+/books:
+  post:
+    body:
+      application/json:
+        type: createbookreq
+        
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              {
+                "Result": "Book added successfully",
+                "Book code" : "here is your book code BK123"
+              }
+  get:
+    queryParameters:
+      rating:
+       example: "4"
+      LibraryCode:
+        example: "LB123"   
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/get-book-info-based-on-rating.json
+              
+
+
+              

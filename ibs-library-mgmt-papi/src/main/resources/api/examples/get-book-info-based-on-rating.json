@@ -1,0 +1,24 @@
+{
+  "LibraryCode":"IBS111",
+  "books":[{
+    "bookCode": "BK666",
+    "title": "Mulesoft Mastery",
+    "author": "klart",
+    "bookCategory": "Tech",
+    "readTimeInHrs": 36,
+    "rentalPrice": "200Rs",
+    "rating": 4,
+    "bestSeller": "YES"
+              },
+              {
+    "bookCode": "BK555",
+    "title": "SAP MM",
+    "author": "klart Technologies",
+    "bookCategory": "Technology",
+    "readTimeInHrs": 65,
+    "rentalPrice": "200Rs",
+    "rating": 4,
+    "bestSeller": "YES"   
+}
+]
+}      
