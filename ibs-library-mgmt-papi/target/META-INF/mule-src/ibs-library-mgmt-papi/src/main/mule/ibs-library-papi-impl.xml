@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="4e1ac8ca-ff12-42ff-89e7-8893cb14e277" >
+		<http:request-connection host="https://ibs-library-management-sapi-mxof3z.5sc6y6-4.usa-e2.cloudhub.io/api/Libraries" port="80" />
+	</http:request-config>
+	<http:listener-config name="Ibs-library-mgmt-papi-httpListenerConfig" doc:name="HTTP Listener config" doc:id="b38dc910-c578-4a2e-8578-f304cfaae6c4" >
+		<http:listener-connection host="0.0.0.0" port="8799" />
+	</http:listener-config>
+	<flow name="ibs-library-implFlow" doc:id="2fdcd481-6f3b-44d7-b123-43c1b250df66" >
+		<logger level="INFO" doc:name="Before Logger" doc:id="a7764c61-e7de-4bf9-827e-70093a16c96c" message='#["Before calling sys api"]'/>
+		<http:request method="GET" doc:name="System API Call" doc:id="55b59043-4b8c-41ef-b1ca-bcb303fa4fca" config-ref="HTTP_Request_configuration" path="/api/Libraries">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"x-correlation-id" : "123456",
+	"client_secret" : "8E2e05713Ea64a71AbDD65Dd49ad1372",
+	"client_id" : "28465d74f07a45d98a7dd9ba91907af1"
+}]]]></http:headers>
+		</http:request>
+		<logger level="INFO" doc:name="Afer Logger" doc:id="36409757-7053-4bfc-8869-f4edca223c35" message='#["After Calling sys api"]'/>
+		<ee:transform doc:name="Transform Message" doc:id="341ddc84-46e3-4a50-8ff0-10d54338d2fa" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

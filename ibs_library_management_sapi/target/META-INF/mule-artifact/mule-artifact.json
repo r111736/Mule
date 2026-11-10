@@ -1,0 +1,34 @@
+{
+  "configs": [
+    "ibs_library_management_sapi.xml"
+  ],
+  "secureProperties": [],
+  "supportedJavaVersions": [],
+  "redeploymentEnabled": true,
+  "name": "e0296855-33db-4d90-8117-48e2017e8701:ibs_library_management_sapi:1.0.0",
+  "minMuleVersion": "4.9.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedPackages": [],
+      "exportedResources": [
+        "api/Datatype/201-dataType.raml",
+        "api/Datatype/404-datatype.raml",
+        "api/Datatype/create-book-req-dataType.raml",
+        "api/Datatype/get-library-res-dataType.raml",
+        "api/Datatype/getlibrariesdataType.raml",
+        "api/Examples/get-book-info-based-on-rating.json",
+        "api/ibs_library_management_sapi.raml",
+        "api/traits/queryparam-traits.raml",
+        "api/traits/trait-headers.raml",
+        "ibs_library_management_sapi.xml",
+        "log4j2.xml"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}

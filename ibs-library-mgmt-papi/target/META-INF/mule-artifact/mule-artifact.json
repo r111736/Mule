@@ -1,0 +1,39 @@
+{
+  "configs": [
+    "ibs-library-papi-impl.xml",
+    "api.xml",
+    "error-handling.xml"
+  ],
+  "secureProperties": [],
+  "supportedJavaVersions": [],
+  "redeploymentEnabled": true,
+  "name": "com.mycompany:ibs-library-mgmt-papi:1.0.0-SNAPSHOT",
+  "minMuleVersion": "4.9.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedPackages": [],
+      "exportedResources": [
+        "api/DataType/create-book-req-dataType.raml",
+        "api/DataType/get-library-res-dataType.raml",
+        "api/DataType/getlibrariesdataType.raml",
+        "api/examples/get-book-info-based-on-rating.json",
+        "api/ibs-library-mgmt-papi.raml",
+        "api.xml",
+        "application-types.xml",
+        "error-handling.xml",
+        "ibs-library-papi-impl.xml",
+        "log4j2.xml",
+        "properties/dev.yaml",
+        "properties/local.yaml",
+        "properties/prod.yaml",
+        "properties/stage.yaml"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}

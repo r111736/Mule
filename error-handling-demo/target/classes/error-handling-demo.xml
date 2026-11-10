@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:validation="http://www.mulesoft.org/schema/mule/validation"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="ae04f817-05c2-4a68-aced-25becb85c6bd" >
+		<http:listener-connection host="0.0.0.0" port="8087" />
+	</http:listener-config>
+	<validation:config name="Validation_Config" doc:name="Validation Config" doc:id="a0889f35-4915-47a8-8ae4-5a14d88388db" />
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="d5113868-43de-484e-8947-9bf68692d0ba" >
+		<http:request-connection host="http://dummy-test.restapiexample.com" />
+	</http:request-config>
+	<flow name="error-handling-demoFlow" doc:id="d4be88b4-3c4e-4a5d-b5dc-a4fc699c7a5a" >
+		<http:listener doc:name="Listener" doc:id="8e518c3d-87c5-4ec8-9b29-48af99e4a5b1" config-ref="HTTP_Listener_config" path="/errordemo">
+			<http:error-response statusCode="#[vars.httpStatusCode]" />
+		</http:listener>
+		<ee:transform doc:name="Transform Message" doc:id="b3447143-d49b-43f2-ba7c-56cc5407afaf">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	status: "200",
+	Response: "Success"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<try doc:name="Try" doc:id="d0fb38f3-681f-478d-8bf0-0e17221cb627" >
+			<http:request method="GET" doc:name="Request" doc:id="696d0ed7-10f7-448b-a46f-c557720d5752" config-ref="HTTP_Request_configuration" path="/api/v1/employees" />
+			<error-handler >
+				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="c5369f96-a030-4832-a66b-d4a1d92cbbd0" type="HTTP:CONNECTIVITY">
+					<ee:transform doc:name="Transform Message" doc:id="4da8c0e8-4f36-4e95-a0e7-5e9dd0a59cf4" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	Response: error.description
+}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+				</on-error-propagate>
+			</error-handler>
+		</try>
+	</flow>
+</mule>
